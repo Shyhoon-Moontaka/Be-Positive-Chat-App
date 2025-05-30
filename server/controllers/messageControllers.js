@@ -75,13 +75,14 @@ export const reportMessage = async (req, res) => {
   const { reportId } = req.body;
   try {
     let message = await Message.findById(reportId).select(
-      "sender message chatId-_id"
+      "sender message -_id"
     );
 
     if (message.message) {
-      const { data } = await axios.post(process.env.AI_URL, {
+      const {data} = await axios.post(process.env.AI_URL, {
         message: message.message,
       });
+      console.log(data);
       if (parseInt(data[0].label[0], 10) < 3) {
         let reportUserId = message.sender;
         let reportUser = await userModel
@@ -96,16 +97,6 @@ export const reportMessage = async (req, res) => {
         await Message.findByIdAndDelete(reportId);
         reportUser.report += 1;
         await reportUser.save();
-        const lastDoc = await Message.find({
-          chatId: message.chatId,
-        })
-          .sort({ _id: -1 })
-          .limit(1)
-          .select("chatId");
-        console.log(lastDoc.chatId,lastDoc._id);
-        await chatModel.findByIdAndUpdate(lastDoc.chatId, {
-          latestMessage: lastDoc._id,
-        });
         res
           .status(200)
           .send(

@@ -6,7 +6,7 @@ import reportRoutes from "./routes/report.js";
 const app = express();
 
 const corsConfig = {
-  origin: process.env.BASE_URL || "*",
+  origin: "*",
   credentials: true,
 };
 const PORT = process.env.PORT || 5000;

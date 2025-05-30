@@ -26,8 +26,8 @@ function MessageHistory({ messages }) {
     });
     if (res) {
       toast.info(res);
-      dispatch(fetchChats());
     }
+    dispatch(fetchChats());
   };
 
   return (

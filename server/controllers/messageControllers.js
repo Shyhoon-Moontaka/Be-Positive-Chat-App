@@ -3,14 +3,13 @@ import Chat from "../models/chatModel.js";
 import notificationModel from "../models/notificationModel.js";
 import { io } from "../index.js";
 import chatModel from "../models/chatModel.js";
-import { runReport } from "../utils/report.js";
 import userModel from "../models/userModel.js";
+import axios from "axios";
 
 export const sendMessage = async (req, res) => {
   const { chatId, message } = req.body;
   try {
     let chatInfo = await chatModel.findById(chatId);
-    // console.log(chatInfo.users.length);
     if (chatInfo.users.length > 1) {
       await new notificationModel({
         sender: req.rootUserId,
@@ -80,7 +79,9 @@ export const reportMessage = async (req, res) => {
     );
 
     if (message.message) {
-      const data = await runReport(message.message);
+      const data = await axios.post(process.env.AI_URL, {
+        message: message.message,
+      });
       if (parseInt(data[0].label[0], 10) < 3) {
         let reportUserId = message.sender;
         let reportUser = await userModel

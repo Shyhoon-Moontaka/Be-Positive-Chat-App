@@ -82,6 +82,7 @@ export const reportMessage = async (req, res) => {
       const data = await axios.post(process.env.AI_URL, {
         message: message.message,
       });
+      console.log(data);
       if (parseInt(data[0].label[0], 10) < 3) {
         let reportUserId = message.sender;
         let reportUser = await userModel

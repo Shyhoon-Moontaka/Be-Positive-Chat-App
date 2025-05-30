@@ -96,10 +96,15 @@ export const reportMessage = async (req, res) => {
         await Message.findByIdAndDelete(reportId);
         reportUser.report += 1;
         await reportUser.save();
-        const lastDoc = await Message.findOne().sort({ _id: -1 }).select("chatId");
+        const lastDoc = await Message.find({
+          chatId: message.chatId,
+        })
+          .sort({ _id: -1 })
+          .limit(1)
+          .select("chatId");
         await chatModel.findByIdAndUpdate(lastDoc.chatId, {
-        latestMessage: lastDoc._id,
-      });
+          latestMessage: lastDoc._id,
+        });
         res
           .status(200)
           .send(

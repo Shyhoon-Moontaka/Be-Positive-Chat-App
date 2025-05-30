@@ -102,6 +102,7 @@ export const reportMessage = async (req, res) => {
           .sort({ _id: -1 })
           .limit(1)
           .select("chatId");
+        console.log(lastDoc.chatId,lastDoc._id);
         await chatModel.findByIdAndUpdate(lastDoc.chatId, {
           latestMessage: lastDoc._id,
         });

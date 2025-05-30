@@ -79,7 +79,7 @@ export const reportMessage = async (req, res) => {
     );
 
     if (message.message) {
-      const data = await axios.post(process.env.AI_URL, {
+      const {data} = await axios.post(process.env.AI_URL, {
         message: message.message,
       });
       console.log(data);

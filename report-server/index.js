@@ -18,6 +18,3 @@ app.use("/", reportRoutes);
 app.listen(PORT, () => {
   console.log(`ML Server Listening at PORT - ${PORT}`);
 });
-
-
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }

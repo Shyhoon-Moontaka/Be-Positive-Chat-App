@@ -76,13 +76,12 @@ function Home() {
       const data = await fetchAllNotifications();
       dispatch(setNotifications(data));
     };
-
+    getNotification();
     Socket.on(JSON.stringify(activeUser.id), async (data) => {
       if (data) {
         getNotification();
       }
     });
-    getNotification();
   }, []);
 
   return (

@@ -31,6 +31,6 @@ const server = app.listen(PORT, () => {
 });
 export const io = new Server.Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.BASE_URL,
   },
 });

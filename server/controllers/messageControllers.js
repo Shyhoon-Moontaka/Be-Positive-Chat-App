@@ -12,12 +12,6 @@ export const sendMessage = async (req, res) => {
   try {
     let chatInfo = await chatModel.findById(chatId);
     const language = langdetect.detect(message)[0].lang;
-    if(!language=="en"){
-      res.status(200).json({
-        langError:true,
-        langMsg:"What The Hell?!Are you weak in English?"
-      })
-    }
     if (chatInfo.users.length > 1 && language=="en") {
       await new notificationModel({
         sender: req.rootUserId,
@@ -54,6 +48,12 @@ export const sendMessage = async (req, res) => {
           io.emit(JSON.stringify(user._id), true);
         }
       });
+    }
+    else{
+      res.status(200).json({
+        langError:true,
+        langMsg:"What The Hell?!Are you weak in English?"
+      })
     }
   } catch (error) {
     await chatModel.findByIdAndDelete(chatId);

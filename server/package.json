@@ -24,6 +24,7 @@
     "jwt-check-expiration": "^1.0.5",
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.14.3",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "langdetect": "^0.2.1"
   }
 }

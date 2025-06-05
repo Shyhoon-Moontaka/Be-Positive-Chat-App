@@ -12,7 +12,7 @@ export const sendMessage = async (body) => {
     return data;
   } catch (error) {
     // console.log("error in sendmessage api" + error);
-    toast.error(data);
+    toast.error(error);
   }
 };
 export const reportMessage = async (body) => {

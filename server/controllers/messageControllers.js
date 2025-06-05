@@ -1,3 +1,4 @@
+import langdetect from "langdetect";
 import Message from "../models/messageModel.js";
 import Chat from "../models/chatModel.js";
 import notificationModel from "../models/notificationModel.js";
@@ -10,7 +11,11 @@ export const sendMessage = async (req, res) => {
   const { chatId, message } = req.body;
   try {
     let chatInfo = await chatModel.findById(chatId);
-    if (chatInfo.users.length > 1) {
+    const language = langdetect.detect("How are you?")[0].lang;
+    if(language!="en"){
+      res.status(500).send("What The Hell?!Are you weak in English?")
+    }
+    else if (chatInfo.users.length > 1) {
       await new notificationModel({
         sender: req.rootUserId,
         chatId,

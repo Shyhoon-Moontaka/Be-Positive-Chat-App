@@ -12,6 +12,7 @@ export const sendMessage = async (req, res) => {
   try {
     let chatInfo = await chatModel.findById(chatId);
     const language = langdetect.detect("How are you?")[0].lang;
+    console.log(language);
     if(language!="en"){
       res.status(500).send("What The Hell?!Are you weak in English?")
     }

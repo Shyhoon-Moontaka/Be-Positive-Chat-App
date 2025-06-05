@@ -50,7 +50,7 @@ export const sendMessage = async (req, res) => {
       });
     }
     else{
-      res.status(200).json({
+      res.status(201).json({
         langError:true,
         langMsg:"What The Hell?!Are you weak in English?"
       })

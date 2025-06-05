@@ -13,7 +13,10 @@ export const sendMessage = async (req, res) => {
     let chatInfo = await chatModel.findById(chatId);
     const language = langdetect.detect(message)[0].lang;
     if(language!="en"){
-      res.status(500).send("What The Hell?!Are you weak in English?")
+      res.status(200).json({
+        langError:true,
+        langMsg:"What The Hell?!Are you weak in English?"
+      })
     }
     if (chatInfo.users.length > 1) {
       await new notificationModel({
@@ -41,7 +44,10 @@ export const sendMessage = async (req, res) => {
       await Chat.findByIdAndUpdate(chatId, {
         latestMessage: msg,
       });
-      res.status(200).send(msg);
+      res.status(200).json({
+        langError:false,
+        langMsg:msg
+      });
 
       msg.chatId.users.forEach((user) => {
         if (user._id.toString() != req.rootUserId.toString()) {

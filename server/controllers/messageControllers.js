@@ -15,7 +15,7 @@ export const sendMessage = async (req, res) => {
     if(language!="en"){
       res.status(500).send("What The Hell?!Are you weak in English?")
     }
-    else if (chatInfo.users.length > 1) {
+    if (chatInfo.users.length > 1) {
       await new notificationModel({
         sender: req.rootUserId,
         chatId,

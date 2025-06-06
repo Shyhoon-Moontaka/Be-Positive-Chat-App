@@ -93,7 +93,7 @@ export const reportMessage = async (req, res) => {
       const { data } = await axios.post(process.env.AI_URL, {
         message: message.message,
       });
-      if (parseInt(data[0].label[0], 10) < 3) {
+      if (parseInt(data[0].label[0], 10) < 2) {
         let reportUserId = message.sender;
         let reportUser = await userModel
           .findById(reportUserId)
